@@ -2,21 +2,18 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public GameObject PlayerPrefab;
-    public float speed = 5f;
-    public Rigidbody2D rb;
-    public Animator animator;
-    public SpriteRenderer spriteRenderer;
-    private bool isGrounded;
-    private Vector3 spawnPosition;
-    private float gravityScale;
+    public float Speed = 5f;
+    public Rigidbody2D Rb;
+    public Animator Animator;
+    public SpriteRenderer SpriteRenderer;
+    private bool _isGrounded;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        spawnPosition = transform.position;
+        Rb = GetComponent<Rigidbody2D>();
+        Animator = GetComponent<Animator>();
+        SpriteRenderer = GetComponent<SpriteRenderer>();
+        Rb.gravityScale = GameManager.GRAVITYSCALE;
     }
 
     private void Update()
@@ -24,28 +21,27 @@ public class Player : MonoBehaviour
         // Handle sprite flipping
         if (Input.GetKey(KeyCode.A))
         {
-            rb.linearVelocity = new Vector2(-speed, rb.linearVelocity.y);
-            animator.SetBool("isMovingLeft", true);
-            animator.SetBool("isMovingRight", false);
+            Rb.linearVelocity = new Vector2(-Speed, Rb.linearVelocity.y);
+            Animator.SetBool("isMovingLeft", true);
+            Animator.SetBool("isMovingRight", false);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            rb.linearVelocity = new Vector2(speed, rb.linearVelocity.y);
-            animator.SetBool("isMovingLeft", false);
-            animator.SetBool("isMovingRight", true);
+            Rb.linearVelocity = new Vector2(Speed, Rb.linearVelocity.y);
+            Animator.SetBool("isMovingLeft", false);
+            Animator.SetBool("isMovingRight", true);
         }
         else
         {
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-            animator.SetBool("isMovingLeft", false);
-            animator.SetBool("isMovingRight", false);
+            Rb.linearVelocity = new Vector2(0, Rb.linearVelocity.y);
+            Animator.SetBool("isMovingLeft", false);
+            Animator.SetBool("isMovingRight", false);
         }
         // Handle jumping
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
-            rb.gravityScale = -rb.gravityScale;
-            gravityScale = rb.gravityScale;
-            spriteRenderer.flipY = !spriteRenderer.flipY;
+            Rb.gravityScale = -Rb.gravityScale;
+            SpriteRenderer.flipY = !SpriteRenderer.flipY;
         }
     }
 
@@ -53,12 +49,12 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            isGrounded = true;
+            _isGrounded = true;
         }
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Spikes"))
         {
-            Death();
+            GameManager.INSTANCE.Death();
         }
     }
 
@@ -66,12 +62,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            isGrounded = false;
+            _isGrounded = false;
         }
-    }
-
-    private void Death()
-    {
-        Destroy(gameObject);
     }
 }
