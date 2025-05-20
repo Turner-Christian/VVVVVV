@@ -18,7 +18,8 @@ public class CheckpointCeiling : MonoBehaviour
     {
         if (other.CompareTag("Player") && !_isActive)
         {
-            GameManager.GRAVITYSCALE = -7f;
+            GameManager.GRAVITYSCALE = -GameManager.GRAVITYSCALE;
+            GameManager.UPSIDE_DOWN = true;
             GameManager.INSTANCE.CheckpointPos = transform.position;
             SpriteRenderer.sprite = CheckpointSprites[_activeSprite];
             _isActive = true;

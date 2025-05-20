@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static float GRAVITYSCALE = 7f;
     public static GameManager INSTANCE;
+    public static float GRAVITYSCALE = 7f;
+    public static bool UPSIDE_DOWN = false;
     public GameObject PlayerPrefab;
-    public GameObject Player;
     public Vector3 CheckpointPos;
+    public GameObject Player;
 
     private void Awake()
     {
@@ -30,6 +31,16 @@ public class GameManager : MonoBehaviour
     private void Respawn(Vector3 checkpointPos)
     {
         Player = Instantiate(PlayerPrefab, checkpointPos, Quaternion.identity);
+        Player.GetComponent<Rigidbody2D>().gravityScale = GRAVITYSCALE;
+
+        if (UPSIDE_DOWN)
+        {
+            Player.GetComponent<SpriteRenderer>().flipY = true;
+        }
+        else
+        {
+            Player.GetComponent<SpriteRenderer>().flipY = false;
+        }
     }
 
     private IEnumerator RespawnCoroutine()

@@ -18,6 +18,11 @@ public class Checkpoint : MonoBehaviour
     {
         if (other.CompareTag("Player") && !_isActive)
         {
+            if (GameManager.UPSIDE_DOWN)
+            {
+                GameManager.UPSIDE_DOWN = false;
+                GameManager.GRAVITYSCALE = -GameManager.GRAVITYSCALE;
+            }
             GameManager.INSTANCE.CheckpointPos = transform.position;
             SpriteRenderer.sprite = CheckpointSprites[_activeSprite];
             _isActive = true;
