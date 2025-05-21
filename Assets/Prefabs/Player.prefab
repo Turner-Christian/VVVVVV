@@ -48,11 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e549fe816ec61c946b3e3082c5dd2539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 5
+  Speed: 6.5
   Rb: {fileID: 0}
   Animator: {fileID: 0}
   SpriteRenderer: {fileID: 0}
-  GravityScale: 1
 --- !u!212 &6687476254748241125
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -169,8 +168,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.00000007947286, y: 0.019025803}
-  m_Size: {x: 0.628997, y: 1.0380516}
+  m_Offset: {x: 0.0012214979, y: -0.0029586952}
+  m_Size: {x: 0.3871673, y: 0.9940826}
   m_Direction: 0
 --- !u!95 &8626949903267972454
 Animator:

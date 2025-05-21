@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
             Animator.SetBool("isMovingRight", false);
         }
         // Handle jumping
-        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             Rb.gravityScale = -Rb.gravityScale;
             SpriteRenderer.flipY = !SpriteRenderer.flipY;

@@ -17,8 +17,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        CheckpointPos = new Vector3(11, -5, 0); //TODO: needs to change at some point, just for testing
         Player = Instantiate(PlayerPrefab, CheckpointPos, Quaternion.identity);
-        CheckpointPos = new Vector3(-4, 4, 0); //TODO: needs to change at some point, just for testing
     }
 
     public void Death()
