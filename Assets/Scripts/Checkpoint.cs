@@ -24,6 +24,7 @@ public class Checkpoint : MonoBehaviour
                 GameManager.GRAVITYSCALE = -GameManager.GRAVITYSCALE;
             }
             GameManager.INSTANCE.CheckpointPos = transform.position;
+            GameManager.INSTANCE.CameraPos = Camera.main.transform.position;
             SpriteRenderer.sprite = CheckpointSprites[_activeSprite];
             _isActive = true;
         }

@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static float GRAVITYSCALE = 7f;
     public static bool UPSIDE_DOWN = false;
     public GameObject PlayerPrefab;
+    public Vector3 CameraPos;
     public Vector3 CheckpointPos;
     public GameObject Player;
 
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
 
     private void Respawn(Vector3 checkpointPos)
     {
+        Camera.main.transform.position = CameraPos;
         Player = Instantiate(PlayerPrefab, checkpointPos, Quaternion.identity);
         Player.GetComponent<Rigidbody2D>().gravityScale = GRAVITYSCALE;
 

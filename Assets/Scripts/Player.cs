@@ -1,12 +1,15 @@
 using UnityEngine;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
+    public Camera CameraController;
     public float Speed = 5f;
     public Rigidbody2D Rb;
     public Animator Animator;
     public SpriteRenderer SpriteRenderer;
-    private bool _isGrounded;
+    private bool _canMove = true;
+    // private bool _isGrounded;
 
     private void Start()
     {
@@ -18,6 +21,9 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (!_canMove)
+            return;
+
         // Handle sprite flipping
         if (Input.GetKey(KeyCode.A))
         {
@@ -47,10 +53,11 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
-        {
-            _isGrounded = true;
-        }
+        // FIXME:
+        // if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        // {
+        //     _isGrounded = true;
+        // }
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Spikes"))
         {
@@ -58,11 +65,24 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    // FIXME:
+    // private void OnCollisionExit2D(Collision2D collision)
+    // {
+    //     if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+    //     {
+    //         _isGrounded = false;
+    //     }
+    // }
+
+    public void FreezeMovement()
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
-        {
-            _isGrounded = false;
-        }
+        StartCoroutine(FreezeCoroutine());
+    }
+
+    private IEnumerator FreezeCoroutine()
+    {
+        _canMove = false;
+        yield return new WaitForSeconds(.25f);
+        _canMove = true;
     }
 }
