@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        CameraPos = Camera.main.transform.position;
         CheckpointPos = new Vector3(11, -5, 0); //TODO: needs to change at some point, just for testing
         Player = Instantiate(PlayerPrefab, CheckpointPos, Quaternion.identity);
     }

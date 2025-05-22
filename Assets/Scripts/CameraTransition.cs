@@ -13,6 +13,7 @@ public class CameraTransition : MonoBehaviour
         if (playerRb == null) return;
 
         float yVelocity = playerRb.linearVelocity.y;
+        float xVelocity = playerRb.linearVelocity.x;
 
         if (yVelocity > 0)
         {
@@ -25,6 +26,18 @@ public class CameraTransition : MonoBehaviour
             // Moving down
             other.GetComponent<Player>().FreezeMovement();
             Camera.main.transform.position += new Vector3(0, -16f, 0);
+        }
+        else if (xVelocity < 0)
+        {
+            // left
+            other.GetComponent<Player>().FreezeMovement();
+            Camera.main.transform.position += new Vector3(-29, 0, 0);
+        }
+        else if (xVelocity > 0)
+        {
+            // right
+            other.GetComponent<Player>().FreezeMovement();
+            Camera.main.transform.position += new Vector3(29, 0, 0);
         }
 
         _hasTriggered = true;
