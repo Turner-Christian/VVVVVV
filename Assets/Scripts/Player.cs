@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public Animator Animator;
     public SpriteRenderer SpriteRenderer;
     private bool _canMove = true;
+    public bool cutsceneActive = false;
     // private bool _isGrounded;
 
     private void Start()
@@ -21,8 +22,20 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("Player.cs: Update() _canMove: " + _canMove);
+        Debug.Log("Cutscene active: " + cutsceneActive);
+
+        if (cutsceneActive == true)
+        {
+            Rb.linearVelocity = new Vector2(Speed - 3, Rb.linearVelocity.y);
+            Animator.SetBool("isMovingLeft", false);
+            Animator.SetBool("isMovingRight", true);
+        }
+
         if (!_canMove)
+        {
             return;
+        }
 
         // Handle sprite flipping
         if (Input.GetKey(KeyCode.A))
@@ -53,26 +66,12 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // FIXME:
-        // if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
-        // {
-        //     _isGrounded = true;
-        // }
-
         if (collision.gameObject.layer == LayerMask.NameToLayer("Spikes"))
         {
             GameManager.INSTANCE.Death();
         }
     }
 
-    // FIXME:
-    // private void OnCollisionExit2D(Collision2D collision)
-    // {
-    //     if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
-    //     {
-    //         _isGrounded = false;
-    //     }
-    // }
 
     public void FreezeMovement()
     {
@@ -85,4 +84,23 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(.25f);
         _canMove = true;
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("cutscene"))
+        {
+            cutsceneActive = true;
+            _canMove = false;
+        }
+
+        if (other.CompareTag("cutsceneTarget"))
+        {
+            cutsceneActive = false;
+            Rb.linearVelocity = Vector2.zero;
+            Animator.SetBool("isMovingRight", false);
+            Animator.SetBool("isMovingLeft", false);
+            // TODO: show panel showing thanks for playing the demo
+        }
+    }
+
 }
