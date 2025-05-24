@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public Vector3 CameraPos;
     public Vector3 CheckpointPos;
     public GameObject Player;
+    public GameObject Canvas;
+    public bool showCanvas = false;
 
     private void Awake()
     {
@@ -21,6 +23,14 @@ public class GameManager : MonoBehaviour
         CameraPos = Camera.main.transform.position;
         CheckpointPos = new Vector3(11, -5, 0); //TODO: needs to change at some point, just for testing
         Player = Instantiate(PlayerPrefab, CheckpointPos, Quaternion.identity);
+    }
+
+    private void Update()
+    {
+        if(showCanvas)
+        {
+            Invoke("ThanksForPlaying", 1f);
+        }
     }
 
     public void Death()
@@ -50,5 +60,10 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         Respawn(CheckpointPos);
+    }
+
+    private void ThanksForPlaying()
+    {
+        Canvas.SetActive(true);
     }
 }

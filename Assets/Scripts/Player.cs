@@ -22,9 +22,6 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Player.cs: Update() _canMove: " + _canMove);
-        Debug.Log("Cutscene active: " + cutsceneActive);
-
         if (cutsceneActive == true)
         {
             Rb.linearVelocity = new Vector2(Speed - 3, Rb.linearVelocity.y);
@@ -99,7 +96,7 @@ public class Player : MonoBehaviour
             Rb.linearVelocity = Vector2.zero;
             Animator.SetBool("isMovingRight", false);
             Animator.SetBool("isMovingLeft", false);
-            // TODO: show panel showing thanks for playing the demo
+            GameManager.INSTANCE.showCanvas = true;
         }
     }
 
